@@ -1,0 +1,83 @@
+body {
+    padding: 0px;
+    font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+div#main{
+    width: 810px;
+    text-align: left;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    margin-left: -450px;
+}
+
+div#header{
+    background-color: #a8bfb9;
+    width: 800px;
+    height: 50px;
+    border: 1px solid #ECECEC;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 0px;
+}
+
+#header div{
+    color: #595959;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Vladimir Script;
+    left: 40px;
+    top: 10px;
+    position: relative
+}
+
+div#menu{
+    background-color: #a8bfb9;
+    width: 800px;
+    height: 20px;
+    border: 1px solid #ECECEC;
+    border-radius: 0px 0px 10px 10px;
+    border-top: 0px;
+    padding-top: 4px;
+}
+div#body{
+    min-height: 400px;
+
+}
+
+div#footer{
+    background-color: #a8bfb9;
+    width: 800px;
+    height: 15px;
+    border: 1px solid #ECECEC;
+    border-radius: 6px;
+    position: relative;
+    bottom: 0px;
+}
+
+#footer div{
+    color: #595959;
+    font-size: 12px;
+    font-family: Vladimir Script;
+    position: relative
+    width: 100%;
+    text-align: center;
+}
+
+.mb{
+    padding-left: 10px;
+    text-decoration: none;
+    position: relative;
+    top: 5px;
+}
+
+.mb:hover{
+    padding-left: 10px;
+    text-decoration: none;
+    background-color: red;
+    position: relative;
+    top: 5px;
+}

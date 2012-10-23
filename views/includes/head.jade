@@ -1,0 +1,36 @@
+!!! 5
+html
+	head
+		title= title
+		link(rel='stylesheet', href='css/main.css')
+		link(rel='stylesheet', href='jquery/css/smoothness/jquery-ui-1.9.0.custom.css')
+		script(src='jquery/js/jquery-1.8.2.js')
+		script(src='jquery/js/jquery-ui-1.9.0.custom.js')
+		script(src='plugins/jquery.lightbox_me.js')
+		script(type="text/javascript")
+			$(document).ready(function(){
+				$('.trtoggle').click(function() {
+					$('#t_' + $(this).attr('id')).slideToggle('normal');
+				});
+				$('.button').click(function(e){
+					$('#compID').val($(this).attr('id'));
+					$('#add_user').lightbox_me({
+						centered: true, 
+						onLoad: function()
+							{
+								$('#add_user').find('input:first').focus()
+							}
+						});
+					e.preventDefault();
+				});
+
+			});
+	body
+		div#main
+			div#header
+				div Lånedator
+			div#menu
+				a(href = 'home', class='mb') Hem
+				a(href = 'computers', class='mb') Datorer
+				a(href = 'new', class='mb') Ny dator
+			block content

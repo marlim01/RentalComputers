@@ -1,0 +1,23 @@
+extends includes/head
+block content
+	div#body
+		form(method="post", id="minForm") 
+			
+			div Fabrikat
+			input(type="text", name="uMan")
+			
+			div Model
+			input(type="text", name="uModel")
+			
+			div Serienummer
+			input(type="text", name="uSn")
+
+			div Namn
+			input(type="text", name="uName")
+
+			div Kommentar
+			input(type="text", name="uComment")	
+
+			input(type="submit", value="Skapa")    
+
+	include includes/foot

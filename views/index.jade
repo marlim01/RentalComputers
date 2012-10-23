@@ -1,0 +1,9 @@
+extends includes/head
+block content
+	div#body
+		form(method="post", id="minForm") 
+			p Viken är din favorit ost?
+			input(type="text", name="uName")
+			input(type="submit", value="ok")    
+			p(style="font-size:20px") Din favvo ost är #{ost}
+	include includes/foot

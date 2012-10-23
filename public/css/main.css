@@ -1,0 +1,222 @@
+body {
+    padding: 0px;
+    font: 10px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+    color: #00B7FF;
+}
+div#main{
+    width: 810px;
+    text-align: left;
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    margin-left: -450px;
+}
+
+div#header{
+    background-color: #a8bfb9;
+    width: 800px;
+    height: 50px;
+    border: 1px solid #ECECEC;
+    border-radius: 10px 10px 0px 0px;
+    border-bottom: 0px;
+}
+
+#header div{
+    color: #595959;
+    font-size: 40px;
+    font-weight: bold;
+    font-family: Vladimir Script;
+    left: 40px;
+    top: 10px;
+    position: relative
+}
+
+div#menu{
+    background-color: #a8bfb9;
+    width: 800px;
+    height: 20px;
+    border: 1px solid #ECECEC;
+    border-radius: 0px 0px 10px 10px;
+    border-top: 0px;
+    padding-top: 4px;
+}
+div#body{
+    min-height: 400px;
+
+}
+
+div#footer{
+    background-color: #a8bfb9;
+    width: 800px;
+    height: 15px;
+    border: 1px solid #ECECEC;
+    border-radius: 6px;
+    position: relative;
+    bottom: 0px;
+}
+
+#footer div{
+    color: #595959;
+    font-size: 12px;
+    font-family: Vladimir Script;
+    position: relative
+    width: 100%;
+    text-align: center;
+}
+
+.mb{
+    padding-left: 10px;
+    text-decoration: none;
+    position: relative;
+    top: 5px;
+}
+
+.mb:hover{
+    padding-left: 10px;
+    text-decoration: none;
+    background-color: red;
+    position: relative;
+    top: 5px;
+}
+
+table#list
+{
+    border: border: 1px solid #ECECEC;
+    width: 400px;
+}
+
+td#list
+{
+    color: #e4cc34;
+    width: 50px;
+}
+
+div#tst{
+    color: #ECECEC;
+    font-size: 20pt;
+
+}
+
+div.hiddenDiv
+{
+    min-height: 30px;
+}
+
+div.button
+{
+    color: #000;
+    text-align: center;
+    width: 50px;
+    background: #b1c4e4;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 6px 6px 6px 6px;
+    border: 1px dashed #000;
+}
+div.button:hover
+{
+    text-align: center;
+    width: 50px;
+    background: #ECECEC;
+    -moz-border-radius: 5px 5px 5px 5px;
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 6px 06px 6px 6px;
+    border: 1px solid #000;
+    cursor: pointer;
+    z-index: 50px;
+}
+
+div.bMenu
+{
+    display: none;
+    min-height: 80px;
+    min-width: 160px;
+    z-index: 100;
+}
+
+div#add_user
+{
+        -moz-border-radius: 6px;
+        background: #eef2f7;
+        -webkit-border-radius: 6px;
+        border: 1px solid #536376;
+        -webkit-box-shadow: rgba(0,0,0,.6) 0px 2px 12px;
+        -moz-box-shadow:  rgba(0,0,0,.6) 0px 2px 12px;;
+        padding: 14px 22px;
+        width: 400px;
+        position: relative;
+        display: none;
+}
+
+#rounded-corner
+{
+    font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+    font-size: 10px;
+    margin-top: 10px;
+    margin-left: 25px;
+    width: 750px;
+    text-align: left;
+    border-collapse: collapse;
+}
+
+
+#rounded-corner thead th
+{
+    background: #b9c9fe;
+}
+
+#rounded-corner thead th.maxright
+{
+    background: #b9c9fe;
+    -moz-border-radius: 0px 10px 0px 0px;
+    -webkit-border-radius: 0px 10px 0px 0px;
+    border-radius: 0px 10px 0px 0px;
+}
+#rounded-corner thead th.maxleft
+{
+
+    -moz-border-radius: 10px 0px 0px 0px;
+    -webkit-border-radius: 10px 0px 0px 0px;
+    border-radius: 10px 0px 0px 0px;
+}
+
+#rounded-corner th
+{
+    padding: 4px;
+    font-weight: normal;
+    font-size: 12px;
+    color: #039;
+    background: #b9c9fe;
+}
+#rounded-corner td
+{
+    padding: 4px;
+    background: #e8edff;
+    border-top: 1px solid #fff;
+    color: #669;
+}
+.hiddenTD td
+{
+    height: 0px;
+    padding: 0px;
+    background: #e8edff;
+    color: #669;
+}
+
+#rounded-corner tfoot td.rounded-foot-left
+{
+    background: #e8edff url('../table-images/botleft.png') left bottom no-repeat;
+}
+#rounded-corner tfoot td.rounded-foot-right
+{
+    background: #e8edff url('../table-images/botright.png') right bottom no-repeat;
+}
+#rounded-corner tbody tr:hover td
+{
+    background: #d0dafd;
+}
+
+
