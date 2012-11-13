@@ -7,13 +7,30 @@ html
 		script(src='jquery/js/jquery-1.8.2.js')
 		script(src='jquery/js/jquery-ui-1.9.0.custom.js')
 		script(src='plugins/jquery.lightbox_me.js')
+		script(src='plugins/jquery.autocomplete.js')
 		script(type="text/javascript")
 			$(document).ready(function(){
+				var ac = $('#nameOfUser').autocomplete({
+						serviceUrl:'/autocomplete.ashx',
+						minChars:3,
+						delimiter: /(,|;)\s*/, // regex or character
+						maxHeight:400,
+						width:300,
+						zIndex: 9999,
+						deferRequestBy: 0, //miliseconds
+						noCache: false //default is false, set to true to disable caching
+						// callback function:
+						//onSelect: function(value, data){ alert('You selected: ' + value + ', ' + data); }
+					});
+				ac.enable();
+				ac.setOptions({ params: { first:'John', last:'Doe' } });
+
 				$('.trtoggle').click(function() {
 					$('#t_' + $(this).attr('id')).slideToggle('normal');
 				});
+
 				$('.button').click(function(e){
-					$('#compID').val($(this).attr('id'));
+					$('#compID').val($(this).attr('id').replace('b_', ''));
 					$('#add_user').lightbox_me({
 						centered: true, 
 						onLoad: function()

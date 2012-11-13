@@ -114,7 +114,7 @@ div.button
     -moz-border-radius: 5px 5px 5px 5px;
     -webkit-border-radius: 5px 5px 5px 5px;
     border-radius: 6px 6px 6px 6px;
-    border: 1px dashed #000;
+    border: 1px solid #000;
 }
 div.button:hover
 {
@@ -144,11 +144,14 @@ div#add_user
         -webkit-border-radius: 6px;
         border: 1px solid #536376;
         -webkit-box-shadow: rgba(0,0,0,.6) 0px 2px 12px;
-        -moz-box-shadow:  rgba(0,0,0,.6) 0px 2px 12px;;
+        -moz-box-shadow:  rgba(0,0,0,.6) 0px 2px 12px;
         padding: 14px 22px;
         width: 400px;
+        height: 200px;
         position: relative;
         display: none;
+        font-size: 2em;
+        text-align: center;
 }
 
 #rounded-corner
@@ -191,10 +194,10 @@ div#add_user
     color: #039;
     background: #b9c9fe;
 }
+
 #rounded-corner td
 {
     padding: 4px;
-    background: #e8edff;
     border-top: 1px solid #fff;
     color: #669;
 }
@@ -202,21 +205,109 @@ div#add_user
 {
     height: 0px;
     padding: 0px;
-    background: #e8edff;
-    color: #669;
 }
 
-#rounded-corner tfoot td.rounded-foot-left
+.trtoggle
 {
-    background: #e8edff url('../table-images/botleft.png') left bottom no-repeat;
+    background-color: #e8edff;
+    cursor: pointer;
 }
-#rounded-corner tfoot td.rounded-foot-right
+.trtoggle:hover
 {
-    background: #e8edff url('../table-images/botright.png') right bottom no-repeat;
+    background-color: #ececec;
 }
-#rounded-corner tbody tr:hover td
+
+table.subTable
 {
-    background: #d0dafd;
+
+    border-collapse: collapse;
+    width: 100%;
+        background-color: #FCFCFF;    
 }
 
 
+
+table.subTable tr:hover
+{
+    background-color: #bcbcbc;    
+}
+
+/*============================
+For Inputs
+*/
+
+input[type=text], textarea {
+  @include transition(all 0.30s ease-in-out);
+  outline: none;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid #DDDDDD;
+  height: 25px;
+  width: 380px;
+  font-size: 1.2em;
+}
+ 
+input[type=text]:focus, textarea:focus {
+  @include box-shadow(0 0 5px rgba(81, 203, 238, 1));
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid rgba(81, 203, 238, 1);
+}
+
+label {
+  width: 150px;
+  float: left;
+}
+
+
+
+/*============================
+FOR AUTOCOMPLETE BOX
+*/
+.autocomplete-w1 
+{
+    /*
+    -webkit-box-shadow: rgba(0,0,0,.6) 0px 2px 2px;
+    -moz-box-shadow:  rgba(0,0,0,.6) 0px 2px 2px;
+    box-shadow:  rgba(0,0,0,.6) 0px 2px 2px;
+    background: #eef2f7;
+    */
+    position:absolute; 
+    top:0px; 
+    left:0px; 
+    margin:6px 0 0 6px; 
+    /* IE6 fix: */ 
+    _background:none; 
+    _margin:1px 0 0 0; 
+}
+.autocomplete 
+{ 
+    border:1px solid #999; 
+    background:#FFF; 
+    cursor:default; 
+    text-align:left; 
+    max-height:350px; 
+    overflow:auto; 
+    margin:-6px 6px 6px -6px; 
+    /* IE6 specific: */ 
+    _height:350px;  
+    _margin:0; 
+    _overflow-x:hidden; 
+}
+.autocomplete .selected 
+{ 
+    background:#F0F0F0; 
+}
+.autocomplete div 
+{ 
+    padding:2px 5px; 
+    white-space:nowrap; 
+    overflow:hidden; 
+}
+.autocomplete strong 
+{ 
+    font-weight:normal; 
+    color:#3399FF; 
+}
+
+/*=============================*/

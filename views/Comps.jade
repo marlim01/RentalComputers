@@ -2,9 +2,11 @@ extends includes/head
 block content
 	div#add_user
 		form(method="post", id="newLend") 
-			| Namn 
-			input#nameOfUser(name="nameOfUser")
-			input(id="compID", name="compID", type="text")
+			| Utlånad till 
+			br
+			input#nameOfUser(name="nameOfUser", type="text")
+			br
+			input(id="compID", name="compID", type="hidden")
 			input(type="submit", value="spara")  
 	div#body
 		table#rounded-corner
@@ -28,8 +30,20 @@ block content
 				tr
 					td(colspan=6, style="height: 0px; padding: 0px; border: 0px; background: #ececec;").hiddenTD
 						div(id="t_" + key, style="display: none;")
-							table(style="border: solid 0px;")
+							table.subTable
 								tr
 									td
-										"hej test"
+									td 
+										b Utlånad till
+									td
+										b Utlånad
+									td
+								each v in val.cUser
+									tr
+										td &nbsp;
+										td #{v.Name}
+										td #{v.CreateDate}
+										td
+											if v.ReturnDate == null
+												input(type="button", id="" + v._id + "", value="Åter").returnButton
 	include includes/foot

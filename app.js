@@ -1,14 +1,84 @@
 var     fs     		= require('fs'), // core filesys in node.js se http://nodejs.org/api/fs.html
     		mongoose 	= require('mongoose'), // ORM'is for MongoDb se http://mongoosejs.com/
-    		Schema 		= mongoose.Schema; // .. short map Schema to mongoose.Schema
+        ObjectId = require('mongoose').Types.ObjectId,
+    		Schema 		= mongoose.Schema, // .. short map Schema to mongoose.Schema
+        express   = require("express"),
+        ldapjs    = require("ldapjs"),
+        parseDN   = require("ldapjs").parseDN,
+        parseFilter = require('ldapjs').parseFilter,
+        config    = require("./config.js")
 
-var db = mongoose.createConnection("mongodb://dbu:alpine66@ds035997.mongolab.com:35997/b_computers");
-var express = require("express");
+var db = mongoose.createConnection(config.mongoLab.conString);
 var app = express();
 
 
 
+var assert = require('assert');
+var sprintf = require('util').format;
+var ldap = require('ldapjs');
 
+
+function searchAD(inSearchString, callback){
+  var client = ldapjs.createClient({
+    url: config.AD.Url
+
+  });
+
+  
+
+  client.bind(config.AD.User, config.AD.Pass, function (err) {
+      assert.ifError(err);
+
+
+      var base = 'dc=edita, dc=sverige';
+      var opts = {
+          scope: 'sub',
+          //ou: "Konsulter", 
+          //filter:  'sAMAccountName=valakj'
+          //filter: marvin
+          //(&(email=*@bar.com)(l=Seattle))
+          //parseFilter
+          //filter: parseFilter('(&(sAMAccountName=' + inSearchString + '*)(ou=_JG Communications))')
+          //filter:  '(sAMAccountName=' + inSearchString + '*)(ou=_JG Communications)'
+         filter:  '(cn=*' + inSearchString + '*)'
+      };
+
+      client.search(base, opts, function (err, res) {
+          assert.ifError(err);
+          var result = [];
+          var dn;
+          res.on('searchEntry', function (entry) {
+
+              dn = parseDN(entry.objectName);
+              console.log(dn);
+              //console.log(dn.rdns[0].cn);
+              result.push(dn.rdns[0].cn.replace("\\", ""));
+
+              //console.log(result);
+
+              /*
+              dn.rdns.forEach(function(item) {
+                if (item.type == "cn")
+                  console.log(item.cn);
+              })
+              */
+
+          });
+
+          res.on('end', function () {
+                            callback(result);
+              if (!dn) return;
+           });
+
+           res.on('error', function (err) {
+                console.error('search error: ' + err.toString());
+                process.exit(1);
+           });
+
+       });
+
+  });  
+}
 
    db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function () {
@@ -16,21 +86,25 @@ var app = express();
     });
 
   var computerUsers = new mongoose.Schema({ 
-    name: String, 
-    CreateDate: Date 
+    Name: String, 
+    CreateDate: Date,
+    ReturnDate: Date,
+    Returned: String
   });
+
   var compSchema = new mongoose.Schema({
       cMan: String,
       cModel: String,
       cSN: String,
       cName: String,
       cComment: String,
+      cCreated: Date,
       cUser: [computerUsers]
 
   });
 
-var ComputerModel = db.model('ComputerModeln', compSchema);
-var ComputerUserModel = db.model('ComputerUserModeln', computerUsers);
+var ComputerModel = db.model('ComputerModel', compSchema);
+var ComputerUserModel = db.model('ComputerUserModel', computerUsers);
 
 
 
@@ -57,10 +131,16 @@ app.get('/new', function(req, res){
 
 
 
-app.get('/', function(req, res){
-
-    res.render(__dirname + '/views/index.jade', {title: 'Recept', ost: ''});
-    console.log(__dirname);
+app.get('/autocomplete.ashx', function(req, res){
+  
+    searchAD(req.query["query"], function(result){
+        var strSearchRes =
+        {
+          query:req.query["query"],
+          suggestions:result
+        };
+          res.send(strSearchRes);
+    });
 
 });
 
@@ -68,29 +148,34 @@ app.post('/computers', function(req, res){
   var uUser = req.body.nameOfUser;
   var compID = req.body.compID;
 
+
+
   var newUser = new ComputerUserModel();
 
-  var DateNow = new Date()
+  var DateNow = new Date();
 
-  newUser.name = uUser;
+  newUser.Name = uUser;
   newUser.CreateDate = DateNow;
 
 
-    ComputerModel.findOne('_id:' + compID , function(err, doc){
-      if (err) res.send(404);
+  var query = ComputerModel.findOne({'_id': compID.toString()});
+    //ComputerModel.findOne({'_id': compID}, function(err, doc){
 
-      console.log(doc);
-      doc.cUser.push(newUser);
+    query.exec(function (err, ComputerModel) {
 
-      doc.save;
+      ComputerModel.cUser.push(newUser);
+      ComputerModel.save();
+      res.redirect('/computers');
+      
+    })
 
-      console.log(doc);
+
       //res.render(__dirname + '/views/Comps.jade', {title: 'Datorer', comps: doc});
 
 
  
 
-    });
+    //});
       //res.render(__dirname + '/views/Comps.jade', {title: 'Datorer', comps: doc});
 
 
@@ -113,12 +198,14 @@ app.post('/new', function(req, res){
     var uComment = req.body.uComment;
 
     var newComputer = new ComputerModel();
+    var DateNow = new Date()
 
     newComputer.cMan = uMan;
     newComputer.cModel = uModel;
     newComputer.cSN = uSn;
     newComputer.cName = uName;
     newComputer.cComment = uComment;
+    newComputer.cCreated = DateNow;
 
     newComputer.save(function(err){
       if (err) res.send(err);
@@ -130,20 +217,30 @@ app.post('/new', function(req, res){
     res.send( uName);
 });
 
-// parameters and query strings
-// surf to /test/kalle?phone=0123456789
+app.get('/', function(req, res)
+{
+        res.render(__dirname + '/views/index.jade', {title: 'Datorer'});
+});
+
 app.get('/:name', function(req, res){
   if (req.params.name.toString() == "computers"){
 
-    ComputerModel.find(function(err, doc){
+
+    ComputerModel.find(null,null,{ sort: { _id: -1}  },  function(err, doc){
       if (err) res.send(404);
 
       res.render(__dirname + '/views/Comps.jade', {title: 'Datorer', comps: doc});
-
-
     });
     //res.render(__dirname + '/views/Comps.jade', {title: 'Recept', ost: ''});
+    
   }
+
+console.log(req.params.name.toString());
+
+  if (req.params.name.toString() == "home"){
+        res.render(__dirname + '/views/index.jade', {title: 'Datorer'});
+
+  };
 
 });
 
